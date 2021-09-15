@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Task;
+use App\Entity\User;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -44,9 +45,10 @@ class TaskController extends AbstractController
      * @Route("/tasks/create", name="task_create")
      */
     public function createAction(
+        //User $user,
         Request $request
     ): Response {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+       $this->denyAccessUnlessGranted('IS_AUTHENTICATED_ANONYMOUSLY');
 
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
@@ -55,6 +57,9 @@ class TaskController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $manager = $this->getDoctrine()->getManager();
+            $task->setCreatedAt(new \DateTimeImmutable());
+           // ->$user->getUsername();
+            $task->setIsDone(0);
             $manager->persist($task);
             $manager->flush();
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
@@ -72,6 +77,7 @@ class TaskController extends AbstractController
      */
     public function editAction(Task $task, Request $request)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_ANONYMOUSLY');
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
@@ -95,6 +101,7 @@ class TaskController extends AbstractController
      */
     public function toggleTaskAction(Task $task)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_ANONYMOUSLY');
         $task->toggle(!$task->isDone());
         $this->getDoctrine()->getManager()->flush();
 
@@ -108,6 +115,7 @@ class TaskController extends AbstractController
      */
     public function deleteTaskAction(Task $task)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_ANONYMOUSLY');
         $em = $this->getDoctrine()->getManager();
         $em->remove($task);
         $em->flush();

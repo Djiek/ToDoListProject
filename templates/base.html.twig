@@ -23,32 +23,29 @@
 
         <body>
 
-         <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #e3f2fd;" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">To Do List app</a>
-
-                    <img src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms" />
+         <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #e3f2fd;" role="navigation">
+            <div class="container"> 
+               <div class="row">
+                    <div class="navbar-header">
+                        <a class="navbar-brand">To Do List app</a>
+                        <img src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms" />
+                    </div> 
+                {% if app.user %}
+                    <a href="{{ path('task_create') }}" class="btn btn-primary">Créer une tâche</a>  
+                    <a href="{{ path('user_list') }}" class="btn btn-primary">liste des utilisateurs</a>
+                    <a href="{{ path('task_list') }}" class="btn btn-primary">liste des tâches</a>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('user_create') }}" class="btn btn-primary">Créer un utilisateur</a> 
+                {% endif %}
+                {% if app.user %}
+                    <a href="{{ path('logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
+                {% endif %}
                 </div>
             </div>
         </nav>
 
-        <!-- Page Content -->
-        <div class="container">
-            <div class="row">
-              {% if app.user %}
-                <a href="{{ path('user_create') }}" class="btn btn-primary">Créer un utilisateur</a>
-                <a href="{{ path('task_create') }}" class="btn btn-primary">Créer une tâche</a>
-             {% endif %}
-
-                {% if app.user %}
-                <a href="{{ path('logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
-                {% endif %}
-
-                {% if not app.user and 'login' != app.request.attributes.get('_route') %}
-                 <a href="{{ path('login') }}" class="btn btn-success">Se connecter</a> 
-                {% endif %}
-            </div>
+     
 
             <div class="row">
                 <div class="col-md-12">
@@ -78,7 +75,8 @@
             </div>
         </div>
         <!-- /.container -->
-
+    {% block body %}
+    {% endblock %}
         <div class="container">
 
             <hr>
@@ -94,7 +92,6 @@
 
         <script src="{{ asset('js/jquery.js') }}"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-            {% block body %}
-            {% endblock %}
+        
         </body>
 </html>
