@@ -45,11 +45,9 @@ class TaskController extends AbstractController
      * @Route("/tasks/create", name="task_create")
      */
     public function createAction(
-        //User $user,
         Request $request
     ): Response {
-       $this->denyAccessUnlessGranted('IS_AUTHENTICATED_ANONYMOUSLY');
-
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_ANONYMOUSLY');
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
 
@@ -58,7 +56,7 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $manager = $this->getDoctrine()->getManager();
             $task->setCreatedAt(new \DateTimeImmutable());
-           // ->$user->getUsername();
+            $task->setUser($this->getUser());
             $task->setIsDone(0);
             $manager->persist($task);
             $manager->flush();
@@ -82,7 +80,7 @@ class TaskController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
@@ -113,9 +111,15 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
      */
-    public function deleteTaskAction(Task $task)
-    {
+    public function deleteTaskAction(Task $task )
+    {   
+        $userTask = $task->getUser();
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_ANONYMOUSLY');
+        if ($task->getUser()->getusername() === "anonyme") {
+          $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Le rôle admin est obligatoire pour supprimer une tache anonyme');
+         } elseif ($task->getUser()->getId() != $this->getUser()->getId()) {
+             throw $this->createAccessDeniedException();
+        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($task);
         $em->flush();

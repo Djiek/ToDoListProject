@@ -61,6 +61,16 @@ class TaskRepository extends ServiceEntityRepository
     }
     */
 
+    public function findTask($id)
+    {
+        return $this->createQueryBuilder('t')
+        ->andWhere('t.id = :val')
+        ->setParameter('val', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     /*
     public function findOneBySomeField($value): ?Task
     {
