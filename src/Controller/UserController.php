@@ -21,7 +21,6 @@ class UserController extends AbstractController
         $this->repo = $repo;
     }
 
-   
     /**
      * @Route("/users", name="user_list")
      */
@@ -70,14 +69,14 @@ class UserController extends AbstractController
     /**
      * @Route("/admin/{id}/edit", name="user_edit")
      */
-    public function editAction(User $user, Request $request,UserPasswordEncoderInterface $passwordEncoder)
+    public function editAction(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
 
-        if ( $form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
 
@@ -90,5 +89,4 @@ class UserController extends AbstractController
 
         return $this->render('user/edit.html.twig', ['form' => $form->createView(), 'user' => $user]);
     }
-
 }

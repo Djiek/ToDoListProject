@@ -32,14 +32,14 @@ class UserType extends AbstractType
                     'choices'  => [
                    'Admin' => 'ROLE_ADMIN',
                    'User' => 'ROLE_USER',
-                ],'label' => 'Role :'
+                   ],'label' => 'Role :'
         ]);
 
         $builder->get('roles')
                 ->addModelTransformer(new CallbackTransformer(
                     function ($rolesArray) {
                         // transform the array to a string
-                        return count($rolesArray)? $rolesArray[0]: null;
+                        return count($rolesArray) ? $rolesArray[0] : null;
                     },
                     function ($rolesString) {
                         // transform the string back to an array
@@ -47,5 +47,5 @@ class UserType extends AbstractType
                     }
                 ));
                 ;
-            }
+    }
 }
