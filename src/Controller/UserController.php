@@ -26,7 +26,7 @@ class UserController extends AbstractController
      */
     public function listAction(Request $request): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_ANONYMOUSLY');
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $limit = 5;
         $page = (int)$request->query->get("page", 1);
         $users = $this->repo->pagination($page, $limit);

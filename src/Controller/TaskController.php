@@ -27,7 +27,7 @@ class TaskController extends AbstractController
      */
     public function listAction(Request $request): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $limit = 5;
         $page = (int)$request->query->get("page", 1);
         $tasks = $this->repo->pagination($page, $limit);
@@ -47,7 +47,7 @@ class TaskController extends AbstractController
     public function createAction(
         Request $request
     ): Response {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_ANONYMOUSLY');
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
 
@@ -75,7 +75,7 @@ class TaskController extends AbstractController
      */
     public function editAction(Task $task, Request $request)
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_ANONYMOUSLY');
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
@@ -99,7 +99,7 @@ class TaskController extends AbstractController
      */
     public function toggleTaskAction(Task $task)
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_ANONYMOUSLY');
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $task->toggle(!$task->isDone());
         $this->getDoctrine()->getManager()->flush();
 
@@ -113,7 +113,7 @@ class TaskController extends AbstractController
      */
     public function deleteTaskAction(Task $task)
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_ANONYMOUSLY');
+        $this->denyAccessUnlessGranted('ROLE_USER');
         if ($task->getUser()->getusername() === "anonyme") {
             $this->denyAccessUnlessGranted(
                 'ROLE_ADMIN',
