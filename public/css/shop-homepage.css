@@ -7,6 +7,12 @@
 body {
   text-align: center;
   padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+  margin: auto ;
+  max-width: 1300px ;
+  }
+
+.navbar2 {
+    margin-top: 10px;
 }
 
 .slide-image {
@@ -23,7 +29,7 @@ body {
 }
 
 .caption {
-  height: 130px;
+  height: 100px;
   overflow: hidden;
 }
 
@@ -34,6 +40,15 @@ body {
 .thumbnail img {
   width: 100%;
 }
+.createTask {
+  margin-top: 10px; 
+  margin-bottom: 10px; 
+}
+
+.task {
+  margin-top: 10px; 
+  margin-bottom: 10px;  
+} 
 
 .ratings {
   padding-right: 10px;
@@ -42,7 +57,8 @@ body {
 }
 
 .thumbnail {
-  padding: 0;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
 .thumbnail .caption-full {
@@ -53,3 +69,5 @@ body {
 footer {
   margin: 50px 0;
 }
+
+/* ************************************************ */

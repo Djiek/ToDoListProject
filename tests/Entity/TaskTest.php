@@ -24,7 +24,8 @@ class TaskTest extends KernelTestCase
 
     public function getValidationErrors(Task $task, int $number = 0) : ConstraintViolationList
     {     
-        $validator = Validation::createValidator();
+        self::bootKernel();
+        $validator = self::$container->get('validator');
         $errors = $validator->validate($task);
         $this->assertCount($number,$errors);
         return $errors;

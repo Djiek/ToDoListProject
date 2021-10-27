@@ -16,11 +16,13 @@ class UserTest extends KernelTestCase
      public function getEntity() : User 
     {
         return (new User());
+        //utiliser les setpassword etc.. pour declarer un user
     }
 
     public function assertHasErrors(User $code, int $number) 
     {
-        $validator = Validation::createValidator();
+        self::bootKernel();
+        $validator = self::$container->get('validator');
         $errors = $validator->validate($code);
         $this->assertCount($number,$errors);
         return $errors;
