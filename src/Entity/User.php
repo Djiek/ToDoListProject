@@ -34,7 +34,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $username;
 
     /**
-     * @Assert\NotBlank
      * @ORM\Column(type="json")
      */
     private $roles = [];
