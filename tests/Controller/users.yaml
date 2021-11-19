@@ -1,5 +1,0 @@
-App\Entity\User:
-  user_user:
-    username: "Marine"
-    rôle: "[]"
-    password : "\\$2y\\$10\\$1qK.FSpZAHefDKldoiS23uP8cjhAn.KM2bwWLtIeSIVKpLtNtQkSW"

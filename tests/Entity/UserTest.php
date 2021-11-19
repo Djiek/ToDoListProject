@@ -9,14 +9,14 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints\Length;
 
-
-
 class UserTest extends KernelTestCase
 {
      public function getEntity() : User 
     {
-        return (new User());
-        //utiliser les setpassword etc.. pour declarer un user
+        return (new User())
+       ->setPassword('12345678')
+       ->setUsername('Mathilde')
+       ->setEmail('mathilde@gmail.com');
     }
 
     public function assertHasErrors(User $code, int $number) 
@@ -30,49 +30,36 @@ class UserTest extends KernelTestCase
 
     public function testValidEntity()
     {
-        $this->assertHasErrors(new user, 0);
+        $this->assertHasErrors($this->getEntity(), 0);
     }
 
-    public function testInvalidEntity()
+    public function testInvalidBlankPasswordEntity() 
     {
-        $this->assertHasErrors($this->getEntity()->setPassword('123'), 1); 
+        $errors =  $this->assertHasErrors($this->getEntity()->setPassword(''), 2);
+        $this->assertEquals("Veuillez saisir un mot de passe.", $errors[0]->getMessage());
     }
 
-    // public function testInvalidBlankPassword() 
-    // {
-    //     $this->assertHasErrors($this->getEntity()->setPassword(''), 1);
-    //     $this->assertEquals("Le mot de passe doit faire au minimum 8 caractères", $errors[0]->getPassword());
-    // }
+    public function testInvalidLengthPasswordEntity() 
+    {
+        $errors = $this->assertHasErrors($this->getEntity()->setPassword('123'), 1);
+        $this->assertEquals("Le mot de passe doit faire au minimum 8 caractères", $errors[0]->getMessage());
+    }
     
-    // public function testInvalidBlankUsername() 
-    // {
-    //    $errors =  $this->assertHasErrors($this->getEntity()->setUsername(''), 1);
-     //     $this->assertEquals("le nom que vous avez indiqué est déja utilisé.", $errors[0]->getUsername());
-    // }
+    public function testInvalidBlankUsernameEntity() 
+    {
+       $errors =  $this->assertHasErrors($this->getEntity()->setUsername(''), 1);
+       $this->assertEquals("Veuillez saisir un nom d'utilisateur", $errors[0]->getMessage());
+    }
     
-    // public function testInvalidBlankRoles() 
-    // {
-    //     $this->assertHasErrors($this->getEntity()->setRoles(''), 1);
-    // }
-    
-    // public function testInvalidBlankEmail() 
-    // {
-    //     $this->assertHasErrors($this->getEntity()->setEmail(''), 1);
-    // }
+    public function testInvalidBlankEmailEntity() 
+    {
+       $errors =  $this->assertHasErrors($this->getEntity()->setEmail(''), 1);
+       $this->assertEquals("Vous devez saisir une adresse email.", $errors[0]->getMessage());
+    }   
 
-    // public function testInvalidUsedUsername() {
-    //     $this->loadFixtureFiles([dirname(__DIR__) . '/fixtures/user_login.yaml']);
-    //    $this->assertHasErrors($this->getEntity()->setUsername('Marine'), 1); 
-    // }
-
-
-  
-        //  fields= {"username"},
-// * message= "le nom que vous avez indiqué est déja utilisé."
-
-// @Assert\Length(min="8",minMessage="Le mot de passe doit faire au minimum 8 caractères")
-
-// * @Assert\NotBlank(message="Vous devez saisir une adresse email.")
- //    * @Assert\Email(message="Le format de l'adresse n'est pas correcte.")
-    
+      public function testInvalidFormatEmailEntity() 
+    {
+        $errors =$this->assertHasErrors($this->getEntity()->setEmail('Mathilde'), 1);
+        $this->assertEquals("Le format de l'adresse n'est pas correcte.", $errors[0]->getMessage());
+    } 
 }

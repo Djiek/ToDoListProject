@@ -27,19 +27,16 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks", name="task_list")
      */
-    public function listAction(Request $request,CacheInterface $cache,TaskRepository $repo): Response
+    public function listAction(Request $request, CacheInterface $cache, TaskRepository $repo): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         $limit = 6;
         $page = (int)$request->query->get("page", 1);
-        //$cache->delete('my_cache_key');
         $tasks = $this->repo->pagination($page, $limit);
 
-         $total = $cache->get('task_list', function (ItemInterface $item) use ($repo) {
-          return $repo->getTotalTask();
-          });
-      
-      //  $total = $this->repo->getTotalTask();
+        $total = $cache->get('task_list', function (ItemInterface $item) use ($repo) {
+            return $repo->getTotalTask();
+        });
 
         return $this->render('task/list.html.twig', [
             'tasks' => $tasks,
@@ -114,7 +111,6 @@ class TaskController extends AbstractController
         $this->getDoctrine()->getManager()->flush();
 
         $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
-         // $cache->delete('task_list');
         return $this->redirectToRoute('task_list');
     }
 

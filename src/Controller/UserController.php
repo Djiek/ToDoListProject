@@ -27,13 +27,13 @@ class UserController extends AbstractController
     /**
      * @Route("/users", name="user_list")
      */
-    public function listAction(Request $request,CacheInterface $cache,UserRepository $repo): Response
+    public function listAction(Request $request, CacheInterface $cache, UserRepository $repo): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         $limit = 5;
         $page = (int)$request->query->get("page", 1);
         $users = $this->repo->pagination($page, $limit);
-        $total = $cache->get('user_list',function(ItemInterface $item) use ($repo) {
+        $total = $cache->get('user_list', function (ItemInterface $item) use ($repo) {
             return $repo->getTotalUser();
         });
 
@@ -48,7 +48,7 @@ class UserController extends AbstractController
     /**
      * @Route("/admin/create", name="user_create")
      */
-    public function createAction(Request $request, UserPasswordEncoderInterface $encoder,CacheInterface $cache)
+    public function createAction(Request $request, UserPasswordEncoderInterface $encoder, CacheInterface $cache)
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $user = new User();
@@ -74,8 +74,12 @@ class UserController extends AbstractController
     /**
      * @Route("/admin/{id}/edit", name="user_edit")
      */
-    public function editAction(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder,CacheInterface $cache)
-    {
+    public function editAction(
+        User $user,
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder,
+        CacheInterface $cache
+    ) {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $form = $this->createForm(UserUpdateType::class, $user);
 

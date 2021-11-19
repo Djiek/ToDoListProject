@@ -7,9 +7,9 @@
             <div class="col-md-12 form-group">
                 {{ form_start(form, {'action' : path('task_create')}) }}
                 {{ form_widget(form) }}
-                <button type="submit" class="btn btn-success task">Ajouter</button>
+                <button type="submit"  id="createTask" class="btn btn-success task">Ajouter</button>
                 {{ form_end(form) }}
-                <a href="{{ path('task_list') }}" class="btn btn-primary">Retour à la liste des tâches</a>
+                <a href="{{ path('task_list') }}"class="btn btn-primary">Retour à la liste des tâches</a>
             </div>
         </div>
     </div>

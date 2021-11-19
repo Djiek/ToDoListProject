@@ -10,35 +10,54 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class TaskTest extends KernelTestCase
 {
-    private const NOT_BLANK_MESSAGE_CONTENT = "Veuillez saisir un contenu.";
-    private const NOT_BLANK_MESSAGE_TITLE = "Veuillez saisir un titre.";
-   
-
-     public function getEntity() : Task 
+    public function getEntity() : Task 
     {
-        return (new Task());
+        return (new Task())
+        ->setTitle('Un titre')
+        ->setContent('Je suis un contenu de 20 caractères minimum')
+        ->setCreatedAt(new \DateTimeImmutable())
+        ->setIsDone(1);
     }
 
-    public function getValidationErrors(Task $task, int $number = 0) : ConstraintViolationList
-    {     
+    public function assertHasErrors(Task $code, int $number) 
+    {
         self::bootKernel();
         $validator = self::$container->get('validator');
-        $errors = $validator->validate($task);
+        $errors = $validator->validate($code);
         $this->assertCount($number,$errors);
         return $errors;
     }
 
-    public function testIsValidBlanktitle() 
+    public function testValidEntity()
     {
-        $this->getValidationErrors( $this->getEntity()->setTitle('Un Titre Valide'), 0);  
+        $this->assertHasErrors($this->getEntity(), 0);
     }
 
-    public function testInvalidBlanktitle() 
+    public function testInvalidBlankTitleEntity() 
     {
-        $errors = $this->getValidationErrors( $this->getEntity()->setTitle('non'), 1);
-        $this->assertEquals("Veuillez saisir un contenu.", $errors[0]->getTitle());
+        $errors =   $this->assertHasErrors($this->getEntity()->setTitle(''), 2);
+        $this->assertEquals("Veuillez saisir un titre.", $errors[0]->getMessage());
     }
+
+    public function testInvalidLengthTitleEntity() 
+    {
+        $errors =    $this->assertHasErrors($this->getEntity()->setTitle('Non'), 1);
+        $this->assertEquals("Le titre doit faire au minimum 5 caractères", $errors[0]->getMessage());
+    }
+
+    public function testInvalidBlankContentEntity() 
+    {
+        $errors =  $this->assertHasErrors($this->getEntity()->setContent(''), 2);
+        $this->assertEquals("Veuillez saisir un contenu.", $errors[0]->getMessage());
+    }
+
+    public function testInvalidLengthContentEntity() 
+    {
+        $errors =  $this->assertHasErrors($this->getEntity()->setContent('Un contenu court'), 1);
+        $this->assertEquals("Le content doit faire au minimum 20 caractères", $errors[0]->getMessage());
+    }   
 }

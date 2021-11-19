@@ -8,29 +8,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SecurityControllerTest extends WebTestCase
 {
-
     public function testVisitingWhileLoggedIn()
     {
         $client = static::createClient();
         $client->request('GET', '/login');
-
-        //ça
-            $this->assertSame(200, $client->getResponse()->getStatusCode());
-
-//ou ça
-    //     static::assertEquals(
-    //     Response::HTTP_OK,
-    //     $client->getResponse()->getStatusCode()
-    // );
-
-//ou encore ça
-        //$this->assertResponseStatusCodeSame(Response::HTTP_OK);
-
-
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
         $this->assertSelectorNotExists('.alert.alert-danger');
     }
 
-       public function testLoginWithBadCredentials() 
+    public function testLoginWithBadCredentials() 
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/login');
@@ -47,20 +33,10 @@ class SecurityControllerTest extends WebTestCase
     public function testSuccessfullLogin() 
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/login');
-         $userRepository = static::$container->get(UserRepository::class);
-          $testUser = $userRepository->findOneByUsername('marine');
-
+        $userRepository = static::$container->get(UserRepository::class);
+        $testUser = $userRepository->findOneByUsername('marine');
         $client->loginUser($testUser);
-        // $form = $crawler->selectButton('Se connecter')->form([
-        //     '_username' => 'marine',
-        //     '_password' => '123'
-        // ]);
-        //$client->submit($form);
-        //$this->assertResponseRedirects('http://localhost/login');
-       // $client->followRedirect();
-       $client->request('GET', '/');
+        $client->request('GET', '/');  
+        $this->assertSelectorTextContains('em#logout', 'Se déconnecter');  
     }
-
-  
 }

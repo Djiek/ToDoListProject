@@ -40,7 +40,7 @@
                     <a href="{{ path('user_create') }}" class="btn btn-primary navbar2">Créer un utilisateur</a> 
                 {% endif %} 
                 {% if app.user %}
-                    <a href="{{ path('logout') }}" class="btn btn-danger navbar2">Se déconnecter</a>
+                   <em id="logout"> <a href="{{ path('logout') }}" class="btn btn-danger navbar2">Se déconnecter</a></em>
                 {% endif %}
                 </div>
             </div>   
