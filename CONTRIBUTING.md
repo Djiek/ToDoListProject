@@ -6,9 +6,9 @@ Ce document explique comment contribuer à TODOLISTPROJECT. Ces instructions sup
 
 ***
 Les issues sont un moyen rapide de signaler un bogue. Si vous trouvez un bogue ou une erreur de documentation dans TODOLISTPROJECT, veuillez d'abord vérifier quelques points :
-*   Qu'il n'y ai pas encore de issues ouvertes pour cette erreur
-*   Que le problème n'a pas déjà été résolu (vérifiez la branche de développement ou recherchez les problèmes fermés)
-*   Est-ce que ce n'est pas quelque chose que vous pouvez réparer vous-même ?
+*  Qu'il n'y ai pas encore de issues ouvertes pour cette erreur
+*  Que le problème n'a pas déjà été résolu (vérifiez la branche de développement ou recherchez les problèmes fermés)
+*  Est-ce que ce n'est pas quelque chose que vous pouvez réparer vous-même ?
 ***
 
 ## Compatibilité
