@@ -1,7 +1,7 @@
 # ToDoListProject
 ToDoListProject is an application for managing the daily tasks of the company.
 ***
-*  ici => badge codacy
+*  [![Codacy Badge](https://app.codacy.com/project/badge/Grade/363eabc2d5264644a20f4445b65f632d)](https://www.codacy.com/gh/Djiek/ToDoListProject/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Djiek/ToDoListProject&amp;utm_campaign=Badge_Grade)
 ***
 ## Technologies
 ***
