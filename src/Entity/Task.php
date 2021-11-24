@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TaskRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TaskRepository::class)
@@ -24,11 +25,15 @@ class Task
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Veuillez saisir un titre.")
+     * @Assert\Length(min="5",minMessage="Le titre doit faire au minimum 5 caractères")
      */
     private $title;
 
     /**
+     * @Assert\NotBlank(message="Veuillez saisir un contenu.")
      * @ORM\Column(type="text")
+     * @Assert\Length(min="20",minMessage="Le content doit faire au minimum 20 caractères")
      */
     private $content;
 
@@ -83,7 +88,7 @@ class Task
         return $this;
     }
 
-    public function getIsDone(): ?bool
+    public function isDone(): ?bool
     {
         return $this->isDone;
     }
@@ -105,5 +110,10 @@ class Task
         $this->user = $user;
 
         return $this;
+    }
+
+    public function toggle($flag)
+    {
+        $this->isDone = $flag;
     }
 }

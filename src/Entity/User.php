@@ -29,6 +29,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(message="Veuillez saisir un nom d'utilisateur")
      */
     private $username;
 
@@ -40,6 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Veuillez saisir un mot de passe.")
      * @Assert\Length(min="8",minMessage="Le mot de passe doit faire au minimum 8 caractères")
      */
     private $password;

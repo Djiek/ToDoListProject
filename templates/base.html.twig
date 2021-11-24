@@ -24,6 +24,7 @@
         <body>
 
          <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #e3f2fd;">
+            <div class="container-fluid">
             <div class="container"> 
                <div class="row">
                     <div class="navbar-header">
@@ -31,21 +32,19 @@
                         <img src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms" />
                     </div> 
                 {% if app.user %}
-                    <a href="{{ path('task_create') }}" class="btn btn-primary">Créer une tâche</a>  
-                    <a href="{{ path('user_list') }}" class="btn btn-primary">liste des utilisateurs</a>
-                    <a href="{{ path('task_list') }}" class="btn btn-primary">liste des tâches</a>
+                    <a href="{{ path('task_create') }}" class="btn btn-primary navbar2">Créer une tâche</a>  
+                    <a href="{{ path('user_list') }}" class="btn btn-primary navbar2">liste des utilisateurs</a>
+                    <a href="{{ path('task_list') }}" class="btn btn-primary navbar2">liste des tâches</a>
                 {% endif %}
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('user_create') }}" class="btn btn-primary">Créer un utilisateur</a> 
-                {% endif %}
+                    <a href="{{ path('user_create') }}" class="btn btn-primary navbar2">Créer un utilisateur</a> 
+                {% endif %} 
                 {% if app.user %}
-                    <a href="{{ path('logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
+                   <em id="logout"> <a href="{{ path('logout') }}" class="btn btn-danger navbar2">Se déconnecter</a></em>
                 {% endif %}
                 </div>
-            </div>
+            </div>   
         </nav>
-
-     
 
             <div class="row">
                 <div class="col-md-12">

@@ -9,7 +9,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\UserRepository;
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\UserUpdateType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class UserController extends AbstractController
 {
@@ -24,13 +27,15 @@ class UserController extends AbstractController
     /**
      * @Route("/users", name="user_list")
      */
-    public function listAction(Request $request): Response
+    public function listAction(Request $request, CacheInterface $cache, UserRepository $repo): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_ANONYMOUSLY');
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $limit = 5;
         $page = (int)$request->query->get("page", 1);
         $users = $this->repo->pagination($page, $limit);
-        $total = $this->repo->getTotalUser();
+        $total = $cache->get('user_list', function (ItemInterface $item) use ($repo) {
+            return $repo->getTotalUser();
+        });
 
         return $this->render('user/index.html.twig', [
             'users' => $users,
@@ -43,7 +48,7 @@ class UserController extends AbstractController
     /**
      * @Route("/admin/create", name="user_create")
      */
-    public function createAction(Request $request, UserPasswordEncoderInterface $encoder)
+    public function createAction(Request $request, UserPasswordEncoderInterface $encoder, CacheInterface $cache)
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $user = new User();
@@ -60,7 +65,7 @@ class UserController extends AbstractController
             $manager->flush();
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
-
+            $cache->delete('user_list');
             return $this->redirectToRoute('user_list');
         }
         return $this->render('user/create.html.twig', ['form' => $form->createView()]);
@@ -69,10 +74,14 @@ class UserController extends AbstractController
     /**
      * @Route("/admin/{id}/edit", name="user_edit")
      */
-    public function editAction(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder)
-    {
+    public function editAction(
+        User $user,
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder,
+        CacheInterface $cache
+    ) {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserUpdateType::class, $user);
 
         $form->handleRequest($request);
 
@@ -83,7 +92,7 @@ class UserController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', "L'utilisateur a bien été modifié");
-
+            $cache->delete('user_list');
             return $this->redirectToRoute('user_list');
         }
 

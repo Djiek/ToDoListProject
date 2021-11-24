@@ -1,13 +1,16 @@
 {% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
-    <div class="row">
-        {{ form_start(form, {'action' : path('task_create')}) }}
-            {{ form_widget(form) }}
-
-            <button type="submit" class="btn btn-success pull-right">Ajouter</button>
-        {{ form_end(form) }}
-
-        <a href="{{ path('task_list') }}" class="btn btn-primary">Retour à la liste des tâches</a>
+     <div class="formCreateAndShow card bg-light border-dark mb-3">
+        <div class="card-body">
+            <div class="col-md-12 form-group">
+                {{ form_start(form, {'action' : path('task_create')}) }}
+                {{ form_widget(form) }}
+                <button type="submit"  id="createTask" class="btn btn-success task">Ajouter</button>
+                {{ form_end(form) }}
+                <a href="{{ path('task_list') }}"class="btn btn-primary">Retour à la liste des tâches</a>
+            </div>
+        </div>
     </div>
 {% endblock %}

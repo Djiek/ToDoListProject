@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class TaskController extends AbstractController
 {
@@ -25,13 +27,16 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks", name="task_list")
      */
-    public function listAction(Request $request): Response
+    public function listAction(Request $request, CacheInterface $cache, TaskRepository $repo): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $limit = 5;
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $limit = 6;
         $page = (int)$request->query->get("page", 1);
         $tasks = $this->repo->pagination($page, $limit);
-        $total = $this->repo->getTotalTask();
+
+        $total = $cache->get('task_list', function (ItemInterface $item) use ($repo) {
+            return $repo->getTotalTask();
+        });
 
         return $this->render('task/list.html.twig', [
             'tasks' => $tasks,
@@ -45,9 +50,10 @@ class TaskController extends AbstractController
      * @Route("/tasks/create", name="task_create")
      */
     public function createAction(
-        Request $request
+        Request $request,
+        CacheInterface $cache
     ): Response {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_ANONYMOUSLY');
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
 
@@ -64,6 +70,7 @@ class TaskController extends AbstractController
 
             return $this->redirectToRoute('task_list');
         }
+        $cache->delete('task_list');
         return $this->render(
             'task/create.html.twig',
             ['form' => $form->createView()]
@@ -73,9 +80,9 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/{id}/edit", name="task_edit")
      */
-    public function editAction(Task $task, Request $request)
+    public function editAction(Task $task, Request $request, CacheInterface $cache)
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_ANONYMOUSLY');
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
@@ -87,7 +94,7 @@ class TaskController extends AbstractController
 
             return $this->redirectToRoute('task_list');
         }
-
+        $cache->delete('task_list');
         return $this->render('task/edit.html.twig', [
             'form' => $form->createView(),
             'task' => $task,
@@ -97,14 +104,13 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
      */
-    public function toggleTaskAction(Task $task)
+    public function toggleTaskAction(Task $task, CacheInterface $cache)
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_ANONYMOUSLY');
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $task->toggle(!$task->isDone());
         $this->getDoctrine()->getManager()->flush();
 
         $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
-
         return $this->redirectToRoute('task_list');
     }
 
@@ -113,7 +119,7 @@ class TaskController extends AbstractController
      */
     public function deleteTaskAction(Task $task)
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_ANONYMOUSLY');
+        $this->denyAccessUnlessGranted('ROLE_USER');
         if ($task->getUser()->getusername() === "anonyme") {
             $this->denyAccessUnlessGranted(
                 'ROLE_ADMIN',
