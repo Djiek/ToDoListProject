@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+    <div class="formCreateAndShow card bg-light border-dark mb-3">
+        <div class="card-body">
+            <div class="col-md-12 form-group">
+                {{ form_start(form, {'action' : path('task_edit', { 'id' : task.id })}) }}
+                {{ form_widget(form) }}
+                <button id="updateTask" type="submit" class="btn btn-success">Modifier</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>        
+{% endblock %}

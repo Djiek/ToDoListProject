@@ -1,0 +1,90 @@
+/*!
+ * Start Bootstrap - Shop Homepage (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+body {
+  text-align: center;
+  padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+  margin: auto;
+  max-width: 1300px ;
+  }
+
+.navbar2 {
+    margin-top: 10px;
+}
+
+.slide-image {
+  width: 100%;
+}
+
+.carousel-holder {
+  margin-bottom: 30px;
+}
+
+.carousel-control,
+.item {
+  border-radius: 4px;
+}
+
+.caption {
+  height: 100px;
+  overflow: hidden;
+}
+
+.caption h4 {
+  white-space: nowrap;
+}
+
+.thumbnail img {
+  width: 100%;
+}
+.createTask {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.task {
+  margin-top: 10px;
+  margin-bottom: 10px;
+} 
+
+.ratings {
+  padding-right: 10px;
+  padding-left: 10px;
+  color: #d17581;
+}
+
+.thumbnail {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.thumbnail .caption-full {
+  padding: 9px;
+  color: #333;
+}
+
+footer {
+  margin: 50px 0;
+}
+
+ @media (max-width: 768px) {
+  td 
+    {
+      display: block;
+      margin-left:  50px;
+    }
+  tr
+    {
+      border-width:1px;
+      border-style: solid;
+      border-color:black
+    }
+  th
+    {
+      visibility: hidden;
+    }
+}
+/* ************************************************ */
