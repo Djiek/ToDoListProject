@@ -6,9 +6,9 @@ Ce document explique comment contribuer à TODOLISTPROJECT. Ces instructions sup
 
 ***
 Les issues sont un moyen rapide de signaler un bogue. Si vous trouvez un bogue ou une erreur de documentation dans TODOLISTPROJECT, veuillez d'abord vérifier quelques points :
-* Qu'il n'y ai pas encore de issues ouvertes pour cette erreur
-* Que le problème n'a pas déjà été résolu (vérifiez la branche de développement ou recherchez les problèmes fermés)
-* Est-ce que ce n'est pas quelque chose que vous pouvez réparer vous-même ?
+*   Qu'il n'y ai pas encore de issues ouvertes pour cette erreur
+*   Que le problème n'a pas déjà été résolu (vérifiez la branche de développement ou recherchez les problèmes fermés)
+*   Est-ce que ce n'est pas quelque chose que vous pouvez réparer vous-même ?
 ***
 
 ## Compatibilité
@@ -21,7 +21,7 @@ TODOLISTPROJECT recommande l'utilisation de PHP 7.3.12
 Dans votre navigateur, accédez à : https://github.com/Djiek/ToDoListProject
 "Forkez" le référentiel en cliquant sur le bouton 'Fork' en haut à droite. Le fork se produira et vous serez redirigé vers votre propre fork du référentiel. Copiez l'URL du référentiel Git en cliquant sur le presse-papiers à côté de l'URL sur le côté droit de la page sous « URL de clonage HTTPS ». Vous collerez cette URL lors de l'exécution de la git clonecommande suivante.
 ***
-* Sur votre ordinateur, suivez ces étapes pour configurer un référentiel local pour travailler sur ToDoListProject :
+*   Sur votre ordinateur, suivez ces étapes pour configurer un référentiel local pour travailler sur ToDoListProject :
 ***
 ```
 $ git clone https://github.com/YOUR_ACCOUNT/ToDoListProject

@@ -7,7 +7,7 @@
 body {
   text-align: center;
   padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-  margin: auto ;
+  margin: auto;
   max-width: 1300px ;
   }
 
@@ -41,13 +41,13 @@ body {
   width: 100%;
 }
 .createTask {
-  margin-top: 10px; 
-  margin-bottom: 10px; 
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .task {
-  margin-top: 10px; 
-  margin-bottom: 10px;  
+  margin-top: 10px;
+  margin-bottom: 10px;
 } 
 
 .ratings {
@@ -73,16 +73,16 @@ footer {
  @media (max-width: 768px) {
   td 
     {
-      display : block;
-      margin-left :  50px;
+      display: block;
+      margin-left:  50px;
     }
-    tr 
+  tr
     {
-    border-width:1px;
-    border-style: solid;
-    border-color:black
+      border-width:1px;
+      border-style: solid;
+      border-color:black
     }
-     th 
+  th
     {
       visibility: hidden;
     }
