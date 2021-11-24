@@ -13,12 +13,12 @@
         <div class="row">
             <table class="table">
                 <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nom d'utilisateur</th>
-                    <th>Adresse d'utilisateur</th>
-                    <th>Actions</th>
-                </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Nom d'utilisateur</th>
+                        <th>Adresse d'utilisateur</th>
+                        <th>Actions</th>
+                    </tr>
                 </thead>
                 <tbody>
                 {% for user in users %}
@@ -35,27 +35,27 @@
                 </tbody>
             </table>
         </div>
-         <div>
-        {% set pages = (total / limit)|round(0,'ceil') %}
-        {% if pages %} 
-        <ul class="pagination" id="pagination-flickr">
-            <li class="{{ (page == 1) ? 'page-item disabled' : '' }}">
-                <a href="{{ (page > 1) ? '?page=' ~ (page - 1) : '' }}">
-                    <i>&laquo;</i>
-                </a>  
-            </li>
+        <div>
+            {% set pages = (total / limit)|round(0,'ceil') %}
+            {% if pages %} 
+            <ul class="pagination" id="pagination-flickr">
+                <li class="{{ (page == 1) ? 'page-item disabled' : '' }}">
+                    <a href="{{ (page > 1) ? '?page=' ~ (page - 1) : '' }}">
+                        <i>&laquo;</i>
+                    </a>  
+                </li>
             
-            {% for item in 1.. pages %}
+                {% for item in 1.. pages %}
                 <li class='{{ (page == item) ? 'page-item active' : '' }}'>
                     <a href="?page={{item}}">{{item}}</a>
                 </li> 
-            {% endfor %} 
+                {% endfor %} 
                 <li  class="{{ (page == pages ) ? 'page-item disabled' : '' }}">
                     <a href="{{ (page < pages) ? '?page=' ~ (page + 1) : '' }}">
                         <i>&raquo;</i>
                     </a>  
                 </li> 
-        </ul>
+            </ul>
            {% endif %}
     </div>
     {% endif %}
