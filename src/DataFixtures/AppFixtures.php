@@ -54,7 +54,6 @@ class AppFixtures extends Fixture
                     ->setCreatedAt($faker->dateTime($max = 'now', $timezone = null))
                     ->setContent($faker->sentence(10))
                     ->setIsDone(0);
-                $taskAdmins[] = $taskAdmin;
                 $manager->persist($taskAdmin);
         }  
 
@@ -66,7 +65,6 @@ class AppFixtures extends Fixture
                         ->setCreatedAt($faker->dateTime($max = 'now', $timezone = null))
                         ->setContent($faker->sentence(10))
                         ->setIsDone(0);
-                $tasks[] = $task;
                 $manager->persist($task);
         }  
 
@@ -78,7 +76,6 @@ class AppFixtures extends Fixture
                     ->setContent($faker->sentence(10))
                     ->setIsDone(1)
                     ->setUser($anonymeUser);
-                    $taskAnonymes[] = $taskAnonyme;
                     $manager->persist($taskAnonyme);
         }
         $manager->flush();
