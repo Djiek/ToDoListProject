@@ -1,16 +1,8 @@
 <?php
-//* @Assert\Length(min="10",minMessage="Le titre doit faire au minimum 10 caractères")
-//* @Assert\Length(min="10",minMessage="Le content doit faire au minimum 10 caractères")
-// + les not blank =>  @Assert\NotBlank(message="veuillez saisir un contenu.")  @Assert\NotBlank(message="veuillez saisir un titre.")
 namespace Tests\Entity;
 
 use App\Entity\Task;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\Validator\ConstraintViolationList;
-use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class TaskTest extends KernelTestCase
 {
@@ -18,7 +10,7 @@ class TaskTest extends KernelTestCase
     {
         return (new Task())
         ->setTitle('Un titre')
-        ->setContent('Je suis un contenu de 20 caractères minimum')
+        ->setContent('Je suis un contenu de 10 caractères minimum')
         ->setCreatedAt(new \DateTimeImmutable())
         ->setIsDone(1);
     }
@@ -57,7 +49,7 @@ class TaskTest extends KernelTestCase
 
     public function testInvalidLengthContentEntity() 
     {
-        $errors =  $this->assertHasErrors($this->getEntity()->setContent('Un contenu court'), 1);
-        $this->assertEquals("Le content doit faire au minimum 20 caractères", $errors[0]->getMessage());
+        $errors =  $this->assertHasErrors($this->getEntity()->setContent('petit'), 1);
+        $this->assertEquals("Le content doit faire au minimum 10 caractères", $errors[0]->getMessage());
     }   
 }

@@ -33,7 +33,7 @@ class Task
     /**
      * @Assert\NotBlank(message="Veuillez saisir un contenu.")
      * @ORM\Column(type="text")
-     * @Assert\Length(min="20",minMessage="Le content doit faire au minimum 20 caractères")
+     * @Assert\Length(min="10",minMessage="Le content doit faire au minimum 10 caractères")
      */
     private $content;
 

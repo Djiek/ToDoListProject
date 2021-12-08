@@ -33,7 +33,6 @@ class TaskController extends AbstractController
         $limit = 6;
         $page = (int)$request->query->get("page", 1);
         $tasks = $this->repo->pagination($page, $limit);
-
         $total = $cache->get('task_list', function (ItemInterface $item) use ($repo) {
             return $repo->getTotalTask();
         });
@@ -117,7 +116,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
      */
-    public function deleteTaskAction(Task $task)
+    public function deleteTaskAction(Task $task,CacheInterface $cache)
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         if ($task->getUser()->getusername() === "anonyme") {
@@ -132,7 +131,7 @@ class TaskController extends AbstractController
         $manager = $this->getDoctrine()->getManager();
         $manager->remove($task);
         $manager->flush();
-
+        $cache->delete('task_list');
         $this->addFlash('success', 'La tâche a bien été supprimée.');
 
         return $this->redirectToRoute('task_list');
