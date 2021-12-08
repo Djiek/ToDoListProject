@@ -3,11 +3,7 @@
 namespace Tests\Entity;
 
 use App\Entity\User;
-use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Constraints\Length;
 
 class UserTest extends KernelTestCase
 {

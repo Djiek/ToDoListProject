@@ -4,7 +4,6 @@ namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-use App\Repository\TaskRepository;
 use App\Repository\UserRepository;
 
 class TaskControllerTest extends WebTestCase
