@@ -1,7 +1,7 @@
 # Contribuer à TODOLISTPROJECT
 ## Sommaire
 ***
-Ce document explique comment contribuer à TODOLISTPROJECT. Ces instructions supposent que vous avez un compte GitHub.com, donc si vous n'en avez pas, vous devrez en créer un. Vos modifications de code proposées seront publiées dans votre propre fork du projet TODOLISTPROJECT et vous soumettrez une Pull Request pour que vos modifications soient ajoutées.
+Ce document. explique comment contribuer à TODOLISTPROJECT. Ces instructions supposent que vous avez un compte GitHub.com, donc si vous n'en avez pas, vous devrez en créer un. Vos modifications de code proposées seront publiées dans votre propre fork du projet TODOLISTPROJECT et vous soumettrez une Pull Request pour que vos modifications soient ajoutées.
 ***
 
 ***
